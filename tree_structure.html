@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .tree-node-child{
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="tree-content">
+    <div class="tree-node">
+        <input type="button" value="-" class="tree-node-toggle-button">
+        <input type="checkbox" class="tree-node-parent-checkbox">父节点1
+        <div class="tree-node-child">
+            <input type="checkbox" class="tree-node-child-checkbox">子节点1<br>
+            <input type="checkbox" class="tree-node-child-checkbox">子节点2<br>
+            <input type="checkbox" class="tree-node-child-checkbox">子节点3<br>
+        </div>
+    </div>
+    <div class="tree-node">
+        <input type="button" value="-" class="tree-node-toggle-button">
+        <input type="checkbox" class="tree-node-parent-checkbox">父节点2
+        <div class="tree-node-child">
+            <input type="checkbox" class="tree-node-child-checkbox">子节点1<br>
+            <input type="checkbox" class="tree-node-child-checkbox">子节点2<br>
+            <input type="checkbox" class="tree-node-child-checkbox">子节点3<br>
+        </div>
+    </div>
+</div>
+
+<script src="jquery-3.1.0.js"></script>
+<script>
+    $('.tree-node-parent-checkbox').click(function () {
+        var selected=$(this).prop('checked');
+        if(selected){
+            $(this).next().find('.tree-node-child-checkbox').prop('checked',true);
+        }else {
+            $(this).next().find('.tree-node-child-checkbox').prop('checked',null);
+            //$(this).next().find('.tree-node-child-checkbox').prop('checked',false);
+            //$(this).next().find('.tree-node-child-checkbox').removeAttr('checked');
+        }
+    });
+
+    $('.tree-node-child-checkbox').click(function () {
+        var length=$(this).parent().find('.tree-node-child-checkbox:checked').length;
+        if($(this).prop('checked')){
+            if(length==1){
+                $(this).parent().prev().prop('checked',true);
+            }
+        }else {
+            if (length==0){
+                $(this).parent().prev().prop('checked','');
+            }
+        }
+    });
+
+    $('.tree-node-toggle-button').click(function () {
+        var $toggle_node=$(this).parent().find('.tree-node-child');
+        $toggle_node.toggle();
+        if($toggle_node.is(':visible')){
+            $(this).val('-');
+        }else {
+            $(this).val('+');
+        }
+    });
+</script>
+</body>
+</html>
